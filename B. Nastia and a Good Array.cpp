@@ -5,9 +5,12 @@
 // Copyright   : Your copyright notice
 // Description : B. Nastia and a Good Array in C++, Ansi-style
 //============================================================================
+
 #include <bits/stdc++.h>
+#include <unordered_map>
 #define ll long long int
 #define ld long double
+#define ul unsigned long long int
 #define FOR(a, b, c) for (int(a) = (b); (a) < (c); ++(a))
 #define FORN(a, b, c) for (int(a) = (b); (a) <= (c); ++(a))
 #define FORSQ(a, b, c) for (int(a) = (b); (a) * (a) <= (c); ++(a))
@@ -19,6 +22,7 @@
 #define resest(a, b) memset(a, b, sizeof(a))
 #define vi vector<ll>
 #define pii pair<ll, ll>
+#define sti set<int>
 #define fi first
 #define se second
 #define mod (1000000000 + 7)
@@ -27,8 +31,7 @@
     ios_base::sync_with_stdio(false); \
     cin.tie(NULL);
 using namespace std;
-
-bool prime(ll n)
+bool primes(ll n)
 {
     if (n <= 1)
         return false;
@@ -42,11 +45,11 @@ bool prime(ll n)
     return true;
 }
 
-ll gcd(ll a, ll b)
+ll getgcd(ll a, ll b)
 {
     if (b == 0)
         return a;
-    return gcd(b, a % b);
+    return getgcd(b, a % b);
 }
 
 void online()
@@ -68,10 +71,12 @@ int count_digits(int n)
 bool isSubsetSum(int set[], int n, int sum)
 {
     bool subset[n + 1][sum + 1];
+
     for (int i = 0; i <= n; i++)
         subset[i][0] = true;
     for (int i = 1; i <= sum; i++)
         subset[0][i] = false;
+
     for (int i = 1; i <= n; i++)
     {
         for (int j = 1; j <= sum; j++)
@@ -82,6 +87,7 @@ bool isSubsetSum(int set[], int n, int sum)
                 subset[i][j] = subset[i - 1][j] || subset[i - 1][j - set[i - 1]];
         }
     }
+
     return subset[n][sum];
 }
 
@@ -93,13 +99,21 @@ bool isvow(char s)
         return false;
 }
 
-bool isKthBitSet(int n, int k)
+void SieveOfEratosthenes(int n)
 {
-    if (n & (1 << k))
-        return true;
-    else
-        return false;
+    bool prime[mod];
+
+    memset(prime, true, sizeof(prime));
+    for (int p = 2; p * p <= n; p++)
+    {
+        if (prime[p] == true)
+        {
+            for (int i = p * p; i <= n; i += p)
+                prime[i] = false;
+        }
+    }
 }
+
 bool isPerfectSquare(long double x)
 {
     if (x >= 0)
@@ -109,38 +123,36 @@ bool isPerfectSquare(long double x)
     }
     return false;
 }
+
 int main()
 {
-    //  online ();
+    // online();
     fast_io;
-    int n;
     int t;
     cin >> t;
-    while (t-- > 0)
+    while (t--)
     {
         int n;
         cin >> n;
-        ll arr[n];
-        for (int i = 0; i < n; i++)
+        int a[n];
+        rep(i, n)
+                cin >>
+            a[i];
+        if (n == 1)
+            cout << "0\n";
+        else
         {
-            cin >> arr[i];
-        }
-        cout << 2 << endl;
-        int a[3];
-        a[0] = 3;
-        a[1] = 5;
-        a[2] = 7;
-        for (int i = 1; i <= 2; i++)
-        {
-            int x = min(arr[i], arr[i - 1]);
-            int y = a[i - 1];
-            if (arr[i] < arr[i - 1])
+            vector<pii> ij, xy;
+            FOR(i, 1, n)
             {
-                cout << i - 1 << " " << i << " " << y << " " << x << endl;
+                ij.pb(mkp(i - 1, i));
+                xy.pb(mkp(min(a[i - 1], a[i]), mod));
+                i++;
             }
-            else
+            cout << ij.size() << "\n";
+            rep(i, ij.size())
             {
-                cout << i - 1 << " " << i << " " << x << " " << y << endl;
+                cout << ij[i].fi + 1 << " " << ij[i].se + 1 << " " << xy[i].fi << " " << xy[i].se << " " << endl;
             }
         }
     }
