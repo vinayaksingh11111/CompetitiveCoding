@@ -3,7 +3,7 @@
 // Author      : Vinayak Singh
 // Version     :
 // Copyright   : Your copyright notice
-// Description : A. Football in C++, Ansi-style
+// Description : A. Next Round in C++, Ansi-style
 //============================================================================
 #include <bits/stdc++.h>
 #define ll long long int
@@ -65,16 +65,16 @@ int count_digits(int n)
     return num.size();
 }
 
-bool isSubsetSum(int set[], int n, int sum)
+bool isSubsetans(int set[], int n, int ans)
 {
-    bool subset[n + 1][sum + 1];
+    bool subset[n + 1][ans + 1];
     for (int i = 0; i <= n; i++)
         subset[i][0] = true;
-    for (int i = 1; i <= sum; i++)
+    for (int i = 1; i <= ans; i++)
         subset[0][i] = false;
     for (int i = 1; i <= n; i++)
     {
-        for (int j = 1; j <= sum; j++)
+        for (int j = 1; j <= ans; j++)
         {
             if (j < set[i - 1])
                 subset[i][j] = subset[i - 1][j];
@@ -82,7 +82,7 @@ bool isSubsetSum(int set[], int n, int sum)
                 subset[i][j] = subset[i - 1][j] || subset[i - 1][j - set[i - 1]];
         }
     }
-    return subset[n][sum];
+    return subset[n][ans];
 }
 
 bool isvow(char s)
@@ -111,41 +111,25 @@ bool isPerfectSquare(long double x)
 }
 int main()
 {
-     online ();
+    //  online ();
     fast_io;
-    int n;
-    cin >> n;
-    string s1, s2;
-    int c1 = 0, c2 = 0;
-    for (int i = 0; i < n; i++)
+    int n, k;
+    cin >> n >> k;
+    int arr[n + 1];
+    for (int i = 1; i < n + 1; i++)
     {
-        string s;
-        cin >> s;
-        if (i == 0)
+        cin >> arr[i];
+    }
+    int min = arr[k];
+    // cout<<min<<endl;
+    int total = 0;
+    for (int i = 1; i < n + 1; i++)
+    {
+        if (arr[i] >= min && arr[i] > 0)
         {
-            s1 = s;
-            c1++;
-        }
-        else
-        {
-            if (s == s1)
-            {
-                c1++;
-            }
-            else
-            {
-                s2 = s;
-                c2++;
-            }
+            total++;
         }
     }
-    if (c1 > c2)
-    {
-        cout << s1 << endl;
-    }
-    else
-    {
-        cout << s2 << endl;
-    }
+    cout << total << endl;
     return 0;
 }
