@@ -3,7 +3,7 @@
 // Author      : Vinayak Singh
 // Version     :
 // Copyright   : Your copyright notice
-// Description : A. SwapSort in C++, Ansi-style
+// Description : A. Word Capitalization in C++, Ansi-style
 //============================================================================
 #include <bits/stdc++.h>
 #define ll long long int
@@ -113,44 +113,18 @@ int main()
 {
     //  online ();
     fast_io;
-    int n;
-    cin >> n;
-    ll a1[n];
-    ll a2[n];
-    rep(i, n)
+    string s;
+    cin >> s;
+    char ch = s[0];
+    if (ch >= 65 && ch <= 90)
     {
-        cin >> a1[i];
-        a2[i] = a1[i];
+        ch = ch;
     }
-    sort(a2, a2 + n);
-    int i = 0;
-    vector<int> v;
-    // v.reserve(1000);
-    while (i < n)
+    else
     {
-        if (a1[i] != a2[i])
-        {
-            int j = i + 1;
-            while (j < n)
-            {
-                if (a1[j] == a2[i])
-                {
-                    ll tmp = a1[i];
-                    a1[i] = a1[j];
-                    a1[j] = tmp;
-                    v.pb(i);
-                    v.pb(j);
-                    break;
-                }
-                j++;
-            }
-        }
-        i++;
+        ch = ch - 32;
+        s[0] = ch;
     }
-    cout << v.size() / 2 << endl;
-    for (int k = 0; k < v.size(); k += 2)
-    {
-        cout << v[k] << " " << v[k + 1] << endl;
-    }
+    cout << s << endl;
     return 0;
 }
