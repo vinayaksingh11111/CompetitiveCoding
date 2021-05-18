@@ -3,14 +3,14 @@
 // Author      : Vinayak Singh
 // Version     :
 // Copyright   : Your copyright notice
-// Description : A. Cut Ribbon in C++, Ansi-style
+// Description : A. Stones on the Table in C++, Ansi-style
 //============================================================================
 #include <bits/stdc++.h>
 #define ll long long int
 #define ld long double
 #define FOR(a, b, c) for (int(a) = (b); (a) < (c); ++(a))
 #define FORN(a, b, c) for (int(a) = (b); (a) <= (c); ++(a))
-#define FORSQ(a, b, c) for (int(a) = (b); (a) * (a) <= (c); ++(a))
+#define FORSQ(a, b, c) for (int(a) = (b); (a) * (a)A.Kefa and First Steps <= (c); ++(a))
 #define FORC(a, b, c) for (char(a) = (b); (a) <= (c); ++(a))
 #define FOREACH(a, b) for (auto &(a) : (b))
 #define rep(i, n) FOR(i, 0, n)
@@ -113,26 +113,18 @@ int main()
 {
     //  online ();
     fast_io;
-    int n, a, b, c;
-    cin >> n >> a >> b >> c;
-    int m = 0;
-    for (int x = 0; x <= 4000; x++)
+    int n;
+    cin >> n;
+    string s;
+    cin >> s;
+    int cnt = 0;
+    for (int i = 0; i < n - 1; i++)
     {
-        for (int y = 0; y <= 4000; y++)
+        if (s[i] == s[i + 1])
         {
-            int zc = n - a * x - b * y;
-            if (zc < 0)
-            {
-                break;
-            }
-            double z = zc / (double)c;
-            if (z == int(z))
-            {
-                int ans = x + y + z;
-                m = max(m, ans);
-            }
+            cnt++;
         }
     }
-    cout << m << endl;
+    cout << cnt << endl;
     return 0;
 }
