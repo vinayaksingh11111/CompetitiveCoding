@@ -123,55 +123,75 @@ int main()
         cin >> m;
         string s;
         cin >> s;
-        int cnt = 0;
+        int dp[n];
+        memset(dp, -1, sizeof(dp));
         for (int i = 0; i < n; i++)
         {
             if (s[i] == '0')
             {
-                cnt++;
+                int fl = 0, fr = 0, cl = 0, cr = 0;
+                int l = i - 1, r = i + 1;
+                while (l >= 0)
+                {
+                    if (s[l] == '1')
+                    {
+                        fl = 1;
+                        cl += 1;
+                        break;
+                    }
+                    cl += 1;
+                    l--;
+                }
+                while (r < n)
+                {
+                    if (s[r] == '1')
+                    {
+                        fr = 1;
+                        cr += 1;
+                        break;
+                    }
+                    cr += 1;
+                    r++;
+                }
+                if (fl == 1 && fr == 1)
+                {
+                    int ma = min(cl, cr);
+                    if (cl != cr)
+                    {
+                        if (ma <= m)
+                        {
+                            dp[i] = ma;
+                        }
+                    }
+                }
+                else if (fl == 1 && fr == 0)
+                {
+                    if (cl <= m)
+                    {
+                        dp[i] = cl;
+                    }
+                }
+                else if (fl == 0 && fr == 1)
+                {
+                    if (cr <= m)
+                    {
+                        dp[i] = cr;
+                    }
+                }
             }
         }
-        if (cnt == 0)
+        for (int i = 0; i < n; i++)
         {
-            cout << s << endl;
-        }
-        else
-        {
-            while (m--)
+            if (s[i] == '0')
             {
-                vector<ll> v;
-                for (int i = 0; i <= n - 1; i++)
+                if (dp[i] != -1)
                 {
-                    if (i == 0)
-                    {
-                        if (s[i + 1] == '1' && s[i] != '1')
-                            v.push_back(i);
-                    }
-                    if (i == n - 1)
-                    {
-                        if (s[i - 1] == '1' && s[i] != '1')
-                            v.push_back(i);
-                    }
-                    if (s[i - 1] == '0' && s[i] == '0' && s[i + 1] == '1')
-                    {
-                        v.push_back(i);
-                    }
-                    if (s[i - 1] == '1' && s[i] == '0' && s[i + 1] == '0')
-                    {
-                        v.push_back(i);
-                    }
+                    s[i] = '1';
                 }
-                rep(i, v.size())
-                {
-                    s[v[i]] = '1';
-                }
-                cnt -= v.size();
-                v.clear();
-                if (cnt == 0)
-                    break;
             }
-            cout << s << "\n";
+            cout << s[i];
         }
+        cout << endl;
     }
     return 0;
 }
